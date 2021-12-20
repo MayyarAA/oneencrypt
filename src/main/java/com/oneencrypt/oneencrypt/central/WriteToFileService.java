@@ -46,7 +46,8 @@ public class WriteToFileService {
             FileWriter fileWriter = new FileWriter(this.fileObj.filePathName);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             for(String key:keyValuePair.keySet()){
-                String keyValueStr = key + " : " + keyValuePair.getOrDefault(key," null");
+                String keyValueStr = key + " : " + this.fileObj.encryptionService.encryptString(keyValuePair.getOrDefault(key," null"));
+                System.out.println(this.fileObj.encryptionService.decryptString(keyValuePair.getOrDefault(key," null")));
                 bufferedWriter.write(keyValueStr);
                 bufferedWriter.newLine();
 
