@@ -23,6 +23,7 @@ public class EncryptionService {
             return Base64.getEncoder().encodeToString(cipherText);
         }catch(Exception e){
             System.out.println("Error during encryption process from: EncryptionService>encryptString");
+            e.printStackTrace();
         }
         return null;
     }
@@ -34,7 +35,7 @@ public class EncryptionService {
             byte[] plainText = cipher.doFinal(Base64.getDecoder().decode(encryptedInputString));
             return new String(plainText);
         }catch (Exception e){
-            System.out.println("Error during encryption process from: EncryptionService>decryptString");
+            System.out.println("Error during decryption process from: EncryptionService>decryptString");
         }
             return encryptedInputString;
     }
