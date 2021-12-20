@@ -46,24 +46,28 @@ public class WriteToFileService {
             FileWriter fileWriter = new FileWriter(this.fileObj.filePathName);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             for(String key:keyValuePair.keySet()){
-                String keyValueStr = key + " : " + this.fileObj.encryptionService.encryptString(keyValuePair.getOrDefault(key," null"));
-                System.out.println(this.fileObj.encryptionService.decryptString(keyValuePair.getOrDefault(key," null")));
+                String encryptedString= this.fileObj.encryptionService.encryptString(keyValuePair.getOrDefault(key," null"));
+                String keyValueStr = key + " : " + encryptedString;
+                System.out.println(this.fileObj.encryptionService.decryptString(encryptedString));
                 bufferedWriter.write(keyValueStr);
                 bufferedWriter.newLine();
 
             }
             bufferedWriter.close();
             fileWriter.close();
+            return true;
         }catch(IOException e){
             System.out.println("Write to File error from writeToFileWithKeyValueMap");
             e.printStackTrace();
+            return false;
         }
-        return true;
     }
 
 
     private static void buildKeyValuePair(HashMap<String,String> keyValuePair){
         keyValuePair.put("k1","p1");
         keyValuePair.put("k2","p2");
+        keyValuePair.put("k3","p3");
+        keyValuePair.put("k4","p4");
     }
 }

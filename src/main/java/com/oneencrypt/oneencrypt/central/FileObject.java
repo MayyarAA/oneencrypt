@@ -43,7 +43,7 @@ public class FileObject {
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
             keyGenerator.init(n);
             SecretKey key = keyGenerator.generateKey();
-            System.out.println("Secret Key Generated" + " ---------> " + key);
+            System.out.println("Secret Key Generated" + " ---------> " + key.toString());
             return key;
         }catch(Exception e){
             System.out.println("Error during Key Generation Process");
