@@ -34,6 +34,11 @@ public class ConsoleInput implements Input{
         return this.keyValueMap;
     }
 
+    @Override
+    public void takeInputForDecryption(File file, DataStore dataStore) {
+
+    }
+
     public void addToDataStore(KeyValueObject keyValue){
         this.keyValueMap.put(keyValue.key,keyValue.value);
     }

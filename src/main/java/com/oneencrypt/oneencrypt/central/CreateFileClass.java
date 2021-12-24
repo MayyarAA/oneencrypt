@@ -1,6 +1,7 @@
 package com.oneencrypt.oneencrypt.central;
 
 import com.oneencrypt.oneencrypt.central.dataobjects.StringHashMapDataStore;
+import com.oneencrypt.oneencrypt.central.inputlogic.FileInput;
 import com.oneencrypt.oneencrypt.central.inputlogic.Input;
 import com.oneencrypt.oneencrypt.central.inputlogic.InputFactory;
 
@@ -18,5 +19,12 @@ public class CreateFileClass {
         inputObject.takeInput(userFileForInput,new StringHashMapDataStore());
         WriteToFileService writeToFileService=new WriteToFileService(fileObj,inputObject);
         writeToFileService.createFile();
+
+        String encryptedFilePathName = "/Users/mayyaral-atari/Desktop/JAVAoneencrypt/temp974.txt";
+//        Input inputObjectEncrypted = inputFactory.getInputObject("FileInput");
+        FileInput inputObjectEncrypted = new FileInput();
+        File userFileForInputEncrypted = new File(filePathName);
+        inputObjectEncrypted.takeInputForDecryption(userFileForInputEncrypted,new StringHashMapDataStore());
+        WriteToFileService.writeToFileDcrypt(inputObjectEncrypted);
     }
 }
