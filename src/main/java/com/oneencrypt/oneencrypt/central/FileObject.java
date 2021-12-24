@@ -2,6 +2,7 @@ package com.oneencrypt.oneencrypt.central;
 
 import java.io.File;
 import com.oneencrypt.oneencrypt.central.CreateFileService;
+import com.oneencrypt.oneencrypt.central.encryption.KeyStoreUtils;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -14,13 +15,15 @@ public class FileObject {
     String filePathName;
     SecretKey encryptionKey;
     EncryptionService encryptionService;
+    char[] decodedKey;
     public FileObject(String filePathName){
         this.file = new File(filePathName);
         this.filePathName = filePathName;
         this.encryptionKey = generateKeyV1();
-        IvParameterSpec ivParameterSpec = generateIv();
-        String algorithm = "AES/CBC/PKCS5Padding";
-        this.encryptionService = new EncryptionService(algorithm,encryptionKey,ivParameterSpec);
+        this.decodedKey = KeyStoreUtils.decodeKey(this.encryptionKey);
+//        String algorithm = "AES/CBC/PKCS5Padding";
+//        this.encryptionService = new EncryptionService(algorithm,encryptionKey,ivParameterSpec);
+        this.encryptionService = new EncryptionService(encryptionKey);
     }
     protected  boolean checkIfFileIsWorkable(){
         if(!this.file.canWrite()) return false;
@@ -37,13 +40,13 @@ public class FileObject {
         CreateFileService.createFile(this.filePathName);
     }
 
-    protected static SecretKey generateKeyV1(){
+    protected  SecretKey generateKeyV1(){
         int n =256;
         try{
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
             keyGenerator.init(n);
             SecretKey key = keyGenerator.generateKey();
-            System.out.println("Secret Key Generated" + " ---------> " + key.toString());
+            System.out.println("Secret Key Generated" + " ---------> " + key.getEncoded());
             return key;
         }catch(Exception e){
             System.out.println("Error during Key Generation Process");
@@ -51,9 +54,4 @@ public class FileObject {
         }
     }
 
-    public static IvParameterSpec generateIv() {
-        byte[] iv = new byte[16];
-        new SecureRandom().nextBytes(iv);
-        return new IvParameterSpec(iv);
-    }
 }
