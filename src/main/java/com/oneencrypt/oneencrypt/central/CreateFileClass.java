@@ -9,6 +9,7 @@ import java.io.File;
 
 public class CreateFileClass {
     public void run(){
+        //take in vanilla file containing user input
         String fileName = "temp";
         String filePath = "/Users/mayyaral-atari/Desktop/JAVAoneencrypt/";
         String filePathName = CreateFileNamePathService.createFilePathName(fileName, filePath);
@@ -19,12 +20,13 @@ public class CreateFileClass {
         inputObject.takeInput(userFileForInput,new StringHashMapDataStore());
         WriteToFileService writeToFileService=new WriteToFileService(fileObj,inputObject);
         writeToFileService.createFile();
+        //will result in new file w/ encrypted data + encryption key
 
-        String encryptedFilePathName = "/Users/mayyaral-atari/Desktop/JAVAoneencrypt/temp974.txt";
-//        Input inputObjectEncrypted = inputFactory.getInputObject("FileInput");
+        //decryption of file into a new file
         FileInput inputObjectEncrypted = new FileInput();
         File userFileForInputEncrypted = new File(filePathName);
         inputObjectEncrypted.takeInputForDecryption(userFileForInputEncrypted,new StringHashMapDataStore());
         WriteToFileService.writeToFileDcrypt(inputObjectEncrypted);
+        //will result in new file w/decrypted data
     }
 }

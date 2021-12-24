@@ -39,26 +39,17 @@ public class WriteToFileService {
     }
     public  static boolean writeToFileDcrypt(FileInput inputObjectEncrypted){
         HashMap<String,String> keyValuePairMap = inputObjectEncrypted.getDataStore();
-        String algorithm = "AES/CBC/NOPADDING";
         SecretKey secretKey = KeyStoreUtils.loadKey(inputObjectEncrypted.hexKey);
-        EncryptionService encryptionService = new EncryptionService(algorithm,secretKey,generateIv());
+        EncryptionService encryptionService = new EncryptionService(secretKey);
         for(String key:keyValuePairMap.keySet()){
             String encryptedValue = keyValuePairMap.get(key);
-            System.out.println(secretKey);
+//            System.out.println(secretKey);
             System.out.println(key + " " + encryptedValue + " decrypted value-> " + encryptionService.decryptString(encryptedValue));
         }
         return false;
     }
-    public boolean decodeFileWriteToFile(File file){
-        SecretKey fileKey = KeyStoreUtils.loadKey(file);
-        EncryptionService encryptionService = new EncryptionService("AES",fileKey,generateIv());
-        return true;
-    }
-    public static IvParameterSpec generateIv() {
-        byte[] iv = new byte[16];
-        new SecureRandom().nextBytes(iv);
-        return new IvParameterSpec(iv);
-    }
+
+
     private  boolean writeToFileWithKeyValueMap(HashMap<String,String> keyValuePair ){
         try{
             FileWriter fileWriter = new FileWriter(this.fileObj.filePathName);

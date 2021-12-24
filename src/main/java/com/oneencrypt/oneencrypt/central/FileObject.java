@@ -21,10 +21,9 @@ public class FileObject {
         this.filePathName = filePathName;
         this.encryptionKey = generateKeyV1();
         this.decodedKey = KeyStoreUtils.decodeKey(this.encryptionKey);
-        IvParameterSpec ivParameterSpec = generateIv();
 //        String algorithm = "AES/CBC/PKCS5Padding";
-        String algorithm = "AES/CBC/NOPADDING";
-        this.encryptionService = new EncryptionService(algorithm,encryptionKey,ivParameterSpec);
+//        this.encryptionService = new EncryptionService(algorithm,encryptionKey,ivParameterSpec);
+        this.encryptionService = new EncryptionService(encryptionKey);
     }
     protected  boolean checkIfFileIsWorkable(){
         if(!this.file.canWrite()) return false;
@@ -55,9 +54,4 @@ public class FileObject {
         }
     }
 
-    public  IvParameterSpec generateIv() {
-        byte[] iv = new byte[16];
-        new SecureRandom().nextBytes(iv);
-        return new IvParameterSpec(iv);
-    }
 }

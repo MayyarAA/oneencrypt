@@ -13,9 +13,10 @@ public class EncryptionService {
     Charset ASCII = Charset.forName("US-ASCII");
     IvParameterSpec iv =  new IvParameterSpec("1234567812345678".getBytes(ASCII));
     public EncryptionService(String algorithm, SecretKey key, IvParameterSpec iv){
-//        this.algorithm = algorithm;
         this.key= key;
-//        this.iv = iv;
+    }
+    public EncryptionService(SecretKey key){
+        this.key= key;
     }
     public  String encryptString( String inputString){
         try{
