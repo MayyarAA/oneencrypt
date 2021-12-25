@@ -1,11 +1,11 @@
-package com.oneencrypt.oneencrypt.central;
-import com.oneencrypt.oneencrypt.central.encryption.KeyStoreUtils;
+package com.oneencrypt.oneencrypt.central.services.fileservices;
+import com.oneencrypt.oneencrypt.central.FileObject;
+import com.oneencrypt.oneencrypt.central.services.keyservices.KeyStoreUtils;
 import com.oneencrypt.oneencrypt.central.inputlogic.FileInput;
 import com.oneencrypt.oneencrypt.central.inputlogic.Input;
+import com.oneencrypt.oneencrypt.central.services.encryption.EncryptionService;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
-import java.security.SecureRandom;
 import java.util.*;
 import java.io.*;
 public class WriteToFileService {
@@ -77,11 +77,5 @@ public class WriteToFileService {
         }
     }
 
-    //just for testing
-    private static void buildKeyValuePair(HashMap<String,String> keyValuePair){
-        keyValuePair.put("k1","p1");
-        keyValuePair.put("k2","p2");
-        keyValuePair.put("k3","p3");
-        keyValuePair.put("k4","p4");
-    }
+
 }

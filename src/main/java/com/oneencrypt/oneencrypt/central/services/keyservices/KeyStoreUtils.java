@@ -1,4 +1,4 @@
-package com.oneencrypt.oneencrypt.central.encryption;
+package com.oneencrypt.oneencrypt.central.services.keyservices;
 import ch.qos.logback.core.encoder.EchoEncoder;
 import com.oneencrypt.oneencrypt.central.inputlogic.FileInput;
 

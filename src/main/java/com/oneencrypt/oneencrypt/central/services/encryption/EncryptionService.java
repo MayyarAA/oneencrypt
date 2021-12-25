@@ -1,4 +1,4 @@
-package com.oneencrypt.oneencrypt.central;
+package com.oneencrypt.oneencrypt.central.services.encryption;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
