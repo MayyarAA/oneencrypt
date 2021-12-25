@@ -11,11 +11,17 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class FileInput implements Input{
+public class FileInput extends Input {
     boolean fileSet=false;
-    public String hexKey;
+
     File file;
     DataStore dataStore;
+    public FileInput(String hexKey){
+        super(hexKey);
+    }
+    public FileInput(){
+        super("null");
+    }
     @Override
     public void takeInput() {
 
@@ -48,7 +54,7 @@ public class FileInput implements Input{
 
     public void readFileServiceForDecryption() throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
-        if(scanner.hasNext())hexKey = scanner.next();//skip the key which is the first line of the file
+        if(scanner.hasNext())super.setHexKey( scanner.next());//skip the key which is the first line of the file
         while(scanner.hasNext() ){
             KeyValueObject keyValue = new KeyValueObject();
             String key = "null";

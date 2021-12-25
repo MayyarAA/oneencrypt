@@ -7,10 +7,14 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class ConsoleInput implements Input{
+public class ConsoleInput extends Input {
     HashMap<String,String> keyValueMap;
-    public ConsoleInput(){
+    public ConsoleInput(String hexKey){
+        super(hexKey);
         this.keyValueMap = new HashMap<>();
+    }
+    public ConsoleInput(){
+        super("null");
     }
 
     @Override

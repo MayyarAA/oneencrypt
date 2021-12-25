@@ -6,13 +6,21 @@ import com.oneencrypt.oneencrypt.central.dataobjects.StringHashMapDataStore;
 import java.io.File;
 import java.util.HashMap;
 
-public interface Input {
-    void takeInput();
-    void takeInput(File file, DataStore dataStore);
-    void run();
-    void addToDataStore();
-    HashMap<String,String> getDataStore();
+public abstract class Input {
+    private String hexKey;
+    public Input(String hexKey ){
+        this.hexKey = hexKey;
+    }
+    public void setHexKey(String hexKey){
+        this.hexKey = hexKey;
+    }
+    public String getHexKey(){return this.hexKey;}
+    public abstract void takeInput();
+    public abstract void takeInput(File file, DataStore dataStore);
+    public abstract void run();
+    public abstract void addToDataStore();
+    public abstract HashMap<String,String> getDataStore();
 
 //    void takeInputForDecryption(File userFileForInputEncrypted, StringHashMapDataStore stringHashMapDataStore);
-    void takeInputForDecryption(File file, DataStore dataStore);
+public abstract void takeInputForDecryption(File file, DataStore dataStore);
 }
