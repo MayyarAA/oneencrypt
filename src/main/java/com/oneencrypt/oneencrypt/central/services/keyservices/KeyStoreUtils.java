@@ -1,4 +1,4 @@
-package com.oneencrypt.oneencrypt.central.encryption;
+package com.oneencrypt.oneencrypt.central.services.keyservices;
 import ch.qos.logback.core.encoder.EchoEncoder;
 import com.oneencrypt.oneencrypt.central.inputlogic.FileInput;
 
@@ -39,11 +39,12 @@ public class KeyStoreUtils {
     }
     public static SecretKey loadKey(String hexKey){
         String data = new String(hexKey);
-        if(data==null){
-            System.out.println("Error secretKey not read");
-        }
         byte[] encoded;
         try{
+            if(data==null){
+                System.out.println("Error secretKey not read");
+                throw new Exception();
+            }
             encoded = decodeHex(data.toCharArray());
         }catch(Exception e){
             System.out.println("Error from KeyStoreUtils.loadKey");

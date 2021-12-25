@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class CreateFileService {
-    protected static boolean createFile(String filePathName){
+    public static boolean createFile(String filePathName){
         try{
             File file = new File(filePathName);
             if(file.createNewFile()){
