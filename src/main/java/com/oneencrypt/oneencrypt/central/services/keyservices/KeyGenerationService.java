@@ -4,9 +4,9 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 public class KeyGenerationService {
+    static String algorthim = "AES";
+    static int n =256;
     public static SecretKey generateKeyV1(){
-        int n =256;
-        String algorthim = "AES";
         try{
             KeyGenerator keyGenerator = KeyGenerator.getInstance(algorthim);
             keyGenerator.init(n);
