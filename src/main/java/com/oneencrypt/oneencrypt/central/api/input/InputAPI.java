@@ -25,22 +25,19 @@ public class InputAPI {
 
     //add values w/ existing file
     @PostMapping(path = "addValues", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Resource> addValues(@RequestBody ArrayList<KeyValueObject> keyValueListObj) throws IOException {
+    public ResponseEntity<Resource> addValues(@RequestBody ArrayList<KeyValueObject> keyValueListObj) {
         if (keyValueListObj == null) return null;
+        //create input reader
         InputAPIServices inputAPIServices = new InputAPIServices();
+        //create & write to file
         inputAPIServices.createFileAddValuesEncrypted(keyValueListObj);
         File file = inputAPIServices.returnFile();
-        //how to return file
-        HttpHeaders header = new HttpHeaders();
-        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName());
-        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
-        header.add("Pragma", "no-cache");
-        header.add("Expires", "0");
+        //return file
+        HttpHeaders header = inputAPIServices.createHeaderHelperForFileReturn(file.getName());
         try{
-
-        Path path = Paths.get(file.getAbsolutePath());
-        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-        return ResponseEntity.ok()
+            Path path = Paths.get(file.getAbsolutePath());
+            ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+            return ResponseEntity.ok()
                 .headers(header)
                 .contentLength(file.length())
                 .contentType(MediaType.parseMediaType("application/octet-stream"))

@@ -2,6 +2,7 @@ package com.oneencrypt.oneencrypt.central.api.input;
 
 import com.oneencrypt.oneencrypt.central.FileFeature.CreateFileNamePathService;
 import com.oneencrypt.oneencrypt.central.FileFeature.WriteToFile;
+
 import com.oneencrypt.oneencrypt.central.FileFeature.WriteToFileService;
 import com.oneencrypt.oneencrypt.central.FileObject;
 import com.oneencrypt.oneencrypt.central.dataobjects.DataStore;
@@ -10,6 +11,7 @@ import com.oneencrypt.oneencrypt.central.dataobjects.KeyValueObject;
 import com.oneencrypt.oneencrypt.central.inputlogic.APIInput;
 
 import java.io.File;
+import org.springframework.http.HttpHeaders;
 import java.util.ArrayList;
 
 public class InputAPIServices {
@@ -41,5 +43,14 @@ public class InputAPIServices {
         int fileTag = CreateFileNamePathService.generateRandomFileTage();
         String filePathName = CreateFileNamePathService.createFilePathName(fileName, filePath,fileTag);
         this.fileObject = new FileObject(filePathName);
+    }
+
+    public HttpHeaders createHeaderHelperForFileReturn(String fileName){
+        HttpHeaders header = new HttpHeaders();
+        header.add(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
+        header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        header.add("Pragma", "no-cache");
+        header.add("Expires", "0");
+        return header;
     }
 }
