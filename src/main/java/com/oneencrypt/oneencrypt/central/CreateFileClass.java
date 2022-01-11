@@ -12,6 +12,7 @@ import java.io.File;
 
 public class CreateFileClass {
     public void run(){
+
         int fileTag = CreateFileNamePathService.generateRandomFileTage();
         //take in vanilla file containing user input
         String fileName = "temp";

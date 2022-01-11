@@ -54,5 +54,9 @@ public class WriteToFileService extends WriteToFile{
         }
     }
 
+    public File returnFile(){
+        return new File(this.fileObj.filePathName);
+    }
+
 
 }

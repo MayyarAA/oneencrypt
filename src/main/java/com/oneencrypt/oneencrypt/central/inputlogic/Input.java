@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 public abstract class Input {
     private String hexKey;
+    public Input(){}
     public Input(String hexKey ){
         this.hexKey = hexKey;
     }
