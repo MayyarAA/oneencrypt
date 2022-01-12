@@ -1,5 +1,7 @@
 package com.oneencrypt.oneencrypt.central.services.encryption;
 
+import com.oneencrypt.oneencrypt.central.services.keyservices.KeyStoreUtils;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
@@ -17,6 +19,12 @@ public class EncryptionService {
     }
     public EncryptionService(SecretKey key){
         this.key= key;
+    }
+    public EncryptionService(String hexStringkey){
+        this.key = translateHexStringKeyToSecretKey(hexStringkey);
+    }
+    private SecretKey translateHexStringKeyToSecretKey(String hexStringkey){
+        return KeyStoreUtils.loadKey(hexStringkey);
     }
     public  String encryptString( String inputString){
         try{
