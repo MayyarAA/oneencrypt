@@ -1,7 +1,6 @@
-package com.oneencrypt.oneencrypt.central.api.input;
+package com.oneencrypt.oneencrypt.central.api.encrypt;
 
 import com.oneencrypt.oneencrypt.central.FileFeature.CreateFileNamePathService;
-import com.oneencrypt.oneencrypt.central.FileFeature.WriteToFile;
 
 import com.oneencrypt.oneencrypt.central.FileFeature.WriteToFileService;
 import com.oneencrypt.oneencrypt.central.FileObject;
@@ -14,7 +13,7 @@ import java.io.File;
 import org.springframework.http.HttpHeaders;
 import java.util.ArrayList;
 
-public class InputAPIServices {
+public class EncryptAPIServices {
     private FileObject fileObject;
     private DataStoreFactory dataStoreFactory= new DataStoreFactory();
     private DataStore dataStore = dataStoreFactory.getDataStoreObject("StringHashMapDataStore");

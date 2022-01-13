@@ -1,4 +1,4 @@
-package com.oneencrypt.oneencrypt.central.api.input;
+package com.oneencrypt.oneencrypt.central.api.encrypt;
 
 import com.oneencrypt.oneencrypt.central.dataobjects.KeyValueObject;
 import org.springframework.core.io.ByteArrayResource;
@@ -21,14 +21,14 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping(path = "api/v1/input")
-public class InputAPI {
+public class EncryptAPI {
 
     //add values w/ existing file
     @PostMapping(path = "addValues", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Resource> addValues(@RequestBody ArrayList<KeyValueObject> keyValueListObj) {
         if (keyValueListObj == null) return null;
         //create input reader
-        InputAPIServices inputAPIServices = new InputAPIServices();
+        EncryptAPIServices inputAPIServices = new EncryptAPIServices();
         //create & write to file
         inputAPIServices.createFileAddValuesEncrypted(keyValueListObj);
         File file = inputAPIServices.returnFile();
