@@ -23,6 +23,10 @@ public class APIInput extends Input{
         }
     }
     @Override
+    public void addToDataStore() {
+        decomposeListToStringHashMapDataStore();
+    }
+    @Override
     public void takeInput() {
 
     }
@@ -37,10 +41,6 @@ public class APIInput extends Input{
 
     }
 
-    @Override
-    public void addToDataStore() {
-        decomposeListToStringHashMapDataStore();
-    }
 
     //To do: Refactor return type to be DataStore
     @Override

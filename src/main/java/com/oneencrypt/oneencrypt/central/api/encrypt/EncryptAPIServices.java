@@ -37,7 +37,7 @@ public class EncryptAPIServices {
         return this.writeToFileService.returnFile();
     }
     private void createFileObjHelper(){
-        String fileName = "temp";
+        String fileName = "tempEncrypted";
         String filePath = "/Users/mayyaral-atari/Desktop/JAVAoneencrypt/";
         int fileTag = CreateFileNamePathService.generateRandomFileTage();
         String filePathName = CreateFileNamePathService.createFilePathName(fileName, filePath,fileTag);

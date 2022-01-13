@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping(path = "api/v1/input")
+@RequestMapping(path = "api/v1/encrypt")
 public class EncryptAPI {
 
     //add values w/ existing file

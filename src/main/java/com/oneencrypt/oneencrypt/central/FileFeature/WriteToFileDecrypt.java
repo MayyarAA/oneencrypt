@@ -34,6 +34,9 @@ public class WriteToFileDecrypt extends  WriteToFile{
     public void writeAndCreateFile() {
         writeToFile();
     }
+    public void writeAndCreateFileAlreadyDecrypted() {
+        writeToFileWithKeyValueMapAlreadyDecrypted();
+    }
 
     protected void run(){
     }
@@ -72,4 +75,30 @@ public class WriteToFileDecrypt extends  WriteToFile{
         return true;
     }
 
+    private  boolean writeToFileWithKeyValueMapAlreadyDecrypted() {
+        try {
+            FileWriter fileWriter = new FileWriter(super.fileObj.filePathName);
+            BufferedWriter bufferedWriter =new BufferedWriter(fileWriter);
+            for (String key : super.input.getDataStore().keySet()) {
+                String decryptedValue = super.input.getDataStore().get(key);
+//                String decryptedValue = encryptionService.decryptString(encryptedValue);
+                String keyValueStr = key + " : " + decryptedValue;
+                bufferedWriter.write(keyValueStr);
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+            fileWriter.close();
+            return true;
+        } catch (IOException ioException) {
+            System.out.println("ioException thrown from WriteToFileDecrypt.writeToFileWithKeyValueMap");
+            ioException.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public File returnFile(){
+        return new File(this.fileObj.filePathName);
+    }
 }
