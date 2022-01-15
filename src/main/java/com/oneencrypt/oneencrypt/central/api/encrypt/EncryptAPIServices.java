@@ -10,7 +10,14 @@ import com.oneencrypt.oneencrypt.central.dataobjects.KeyValueObject;
 import com.oneencrypt.oneencrypt.central.inputlogic.APIInput;
 
 import java.io.File;
+
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class EncryptAPIServices {
@@ -19,6 +26,8 @@ public class EncryptAPIServices {
     private DataStore dataStore = dataStoreFactory.getDataStoreObject("StringHashMapDataStore");
     private APIInput apiInput;
     private WriteToFileService writeToFileService;
+    private HttpHeaders httpHeaders;
+    private File file;
     public void createFileAddValuesEncrypted(ArrayList<KeyValueObject> keyValueListObj){
         //create fileobj
         createFileObjHelper();
@@ -29,12 +38,16 @@ public class EncryptAPIServices {
         //add values to fileobj
         this.writeToFileService = new WriteToFileService(fileObject,apiInput);
         writeToFileService.writeAndCreateFile();
+        this.file = writeToFileService.returnFile();
         //return encrypted file
         //make sure to include key
     }
 
     public File returnFile(){
-        return this.writeToFileService.returnFile();
+        return this.file;
+    }
+    public long getFileLength(){
+        return this.file.length();
     }
     private void createFileObjHelper(){
         String fileName = "tempEncrypted";
@@ -44,12 +57,24 @@ public class EncryptAPIServices {
         this.fileObject = new FileObject(filePathName);
     }
 
-    public HttpHeaders createHeaderHelperForFileReturn(String fileName){
+    public void createHeaderHelperForFileReturn(String fileName){
         HttpHeaders header = new HttpHeaders();
         header.add(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
         header.add("Cache-Control", "no-cache, no-store, must-revalidate");
         header.add("Pragma", "no-cache");
         header.add("Expires", "0");
-        return header;
+        this.httpHeaders = header;
     }
+    public HttpHeaders getHttpHeaders(){
+        return this.httpHeaders;
+    }
+
+
+    public ByteArrayResource createByteArrayResource() throws IOException {
+        createHeaderHelperForFileReturn(file.getName());
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+        return resource;
+    }
+
 }
