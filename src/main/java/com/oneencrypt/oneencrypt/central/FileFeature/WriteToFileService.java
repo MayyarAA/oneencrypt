@@ -7,23 +7,25 @@ import java.io.*;
 public class WriteToFileService extends WriteToFile{
     public WriteToFileService(FileObject fileObject, Input input){
         super(fileObject,input);
-//        this.fileObj = fileObject;
-//        keyValuePairMap = input.getDataStore();
     }
 
     public void writeAndCreateFile(){
         if(!fileObj.checkIfFileExists()){fileObj.createFile();}
         if(!fileObj.checkIfFileIsWorkable()){System.out.println("File is not workable check permissions");return;}
-        run();
-    }
-    protected void run(){
-        writeToFile();
+        try{
+            writeToFile();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
-    protected boolean writeToFile(){
-        if(!writeToFileWithKeyValueMap(super.input.getDataStore())){ System.out.println("Error File was not written too");return false;}
+    protected void writeToFile()throws Exception{
+        if(!writeToFileWithKeyValueMap(super.input.getDataStore())){
+            Exception exception = new Exception("Error File was not written too");
+            exception.printStackTrace();
+            throw exception;
+        }
         System.out.println("Success File was written too ");
-        return true;
     }
 
 

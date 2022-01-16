@@ -32,25 +32,25 @@ public class WriteToFileDecrypt extends  WriteToFile{
 
     @Override
     public void writeAndCreateFile() {
-        writeToFile();
+        try{
+            writeToFile();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
     public void writeAndCreateFileAlreadyDecrypted() {
         writeToFileWithKeyValueMapAlreadyDecrypted();
     }
 
-    protected void run(){
-    }
     @Override
-    protected boolean writeToFile() {
+    protected void writeToFile()throws Exception {
         HashMap<String,String> keyValuePairMap =  super.input.getDataStore();
         SecretKey secretKey = KeyStoreUtils.loadKey(super.input.getHexKey());
         this.encryptionService = new EncryptionService(secretKey);
-        writeToFileWithKeyValueMap();
-//        for(String key:keyValuePairMap.keySet()){
-//            String encryptedValue = keyValuePairMap.get(key);
-//            System.out.println(key + " " + encryptedValue + " decrypted value-> " + encryptionService.decryptString(encryptedValue));
-//        }
-        return true;
+        if(!writeToFileWithKeyValueMap()){
+            Exception exception = new Exception("Error File was not written too");
+            throw exception;
+        }
     }
     private  boolean writeToFileWithKeyValueMap() {
         try {

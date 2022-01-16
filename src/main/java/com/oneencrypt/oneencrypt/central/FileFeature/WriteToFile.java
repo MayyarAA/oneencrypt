@@ -10,7 +10,6 @@ public abstract class WriteToFile {
         this.fileObj = fileObj;
         this.input = input;
     }
-    protected abstract boolean writeToFile();
+    protected abstract void writeToFile() throws Exception;
     public abstract void writeAndCreateFile();
-    protected abstract void run();
 }
