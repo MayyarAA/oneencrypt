@@ -55,11 +55,6 @@ public class EncryptAPIServices extends EDAPIServiceInterface {
     }
 
 
-    public ByteArrayResource createByteArrayResource() throws IOException {
-        createHeaderHelperForFileReturn(super.getFile().getName());
-        Path path = Paths.get(super.getFile().getAbsolutePath());
-        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-        return resource;
-    }
+
 
 }

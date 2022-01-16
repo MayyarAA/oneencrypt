@@ -2,10 +2,8 @@ package com.oneencrypt.oneencrypt.central.api.decryptAPI;
 
 import com.oneencrypt.oneencrypt.central.FileFeature.CreateFileNamePathService;
 import com.oneencrypt.oneencrypt.central.FileFeature.WriteToFileDecrypt;
-import com.oneencrypt.oneencrypt.central.FileFeature.WriteToFileService;
 import com.oneencrypt.oneencrypt.central.FileObject;
-import com.oneencrypt.oneencrypt.central.dataobjects.DataStore;
-import com.oneencrypt.oneencrypt.central.dataobjects.DataStoreFactory;
+import com.oneencrypt.oneencrypt.central.api.EDAPIServiceInterface;
 import com.oneencrypt.oneencrypt.central.dataobjects.KeyValueObject;
 import com.oneencrypt.oneencrypt.central.dataobjects.KeyValueObjectList;
 import com.oneencrypt.oneencrypt.central.inputlogic.APIInput;
@@ -15,10 +13,8 @@ import org.springframework.http.HttpHeaders;
 import java.io.File;
 import java.util.ArrayList;
 
-public class DecryptAPIService {
+public class DecryptAPIService extends EDAPIServiceInterface {
     EncryptionService encryptionService;
-    private FileObject fileObject;
-    private APIInput apiInput;
     private WriteToFileDecrypt writeToFileDecrypt;
     public void createFileAddValuesEncrypted(ArrayList<KeyValueObject> decryptedKeyValueObjectsArrayList){
         //create file
@@ -27,11 +23,8 @@ public class DecryptAPIService {
         apiInput = new APIInput(decryptedKeyValueObjectsArrayList);
         this.writeToFileDecrypt = new WriteToFileDecrypt(fileObject,apiInput);
         writeToFileDecrypt.writeAndCreateFileAlreadyDecrypted();
+        super.setFile(writeToFileDecrypt.returnFile());
     }
-    public File returnFile(){
-        return this.writeToFileDecrypt.returnFile();
-    }
-    //return ArrayList<KeyValueObject> for now temp
     public  ArrayList<KeyValueObject> decryptStringServices(KeyValueObjectList keyValueObjectList) throws Exception{
         if(keyValueObjectList==null) throw new Exception("Error: keyValueObjectList is null");
         if(keyValueObjectList.getKeyValueObjectsLists().size()<=0) throw new Exception("Error: keyValueList is empty");
@@ -49,7 +42,7 @@ public class DecryptAPIService {
     }
 
 
-    private void createFileObjHelper(){
+    public void createFileObjHelper(){
         String fileName = "tempDecrypted";
         String filePath = "/Users/mayyaral-atari/Desktop/JAVAoneencrypt/";
         int fileTag = CreateFileNamePathService.generateRandomFileTage();
@@ -57,12 +50,14 @@ public class DecryptAPIService {
         this.fileObject = new FileObject(filePathName);
     }
 
-    public HttpHeaders createHeaderHelperForFileReturn(String fileName){
+
+    public HttpHeaders createHeaderHelperForFileReturnTemp(){
         HttpHeaders header = new HttpHeaders();
-        header.add(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
+        header.add(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + super.getFile().getName());
         header.add("Cache-Control", "no-cache, no-store, must-revalidate");
         header.add("Pragma", "no-cache");
         header.add("Expires", "0");
+        super.setHttpHeaders(header);
         return header;
     }
 }

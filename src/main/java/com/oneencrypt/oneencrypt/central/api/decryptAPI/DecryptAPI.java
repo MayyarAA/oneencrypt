@@ -2,10 +2,8 @@ package com.oneencrypt.oneencrypt.central.api.decryptAPI;
 
 import com.oneencrypt.oneencrypt.central.dataobjects.KeyValueObject;
 import com.oneencrypt.oneencrypt.central.dataobjects.KeyValueObjectList;
-import org.apache.coyote.Response;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,13 +42,10 @@ public class DecryptAPI {
         try{
             ArrayList<KeyValueObject> decryptedKeyValueObjectsArrayList = decryptAPIService.decryptStringServices(keyValueObjectList);
             decryptAPIService.createFileAddValuesEncrypted(decryptedKeyValueObjectsArrayList);
-            File file = decryptAPIService.returnFile();
-            Path path = Paths.get(file.getAbsolutePath());
-            ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-            HttpHeaders header = decryptAPIService.createHeaderHelperForFileReturn(file.getName());
+            ByteArrayResource resource = decryptAPIService.createByteArrayResource();
             return ResponseEntity.ok()
-                    .headers(header)
-                    .contentLength(file.length())
+                    .headers(decryptAPIService.createHeaderHelperForFileReturnTemp())
+                    .contentLength(decryptAPIService.returnFile().length())
                     .contentType(MediaType.parseMediaType("application/octet-stream"))
                     .body(resource);
         }catch(Exception e){
