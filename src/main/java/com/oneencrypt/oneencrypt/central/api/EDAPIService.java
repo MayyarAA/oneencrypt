@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public abstract class EDAPIServiceInterface {
+public abstract class EDAPIService {
     private HttpHeaders httpHeaders;
     public FileObject fileObject;
     private File file;

@@ -27,21 +27,20 @@ public class DecryptAPI {
         //parse out encryptionKey
         DecryptAPIService decryptAPIService = new DecryptAPIService();
         try{
-            ArrayList<KeyValueObject> decryptedKeyValueObjectsArrayList = decryptAPIService.decryptStringServices(keyValueObjectList);
-            return  ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(decryptedKeyValueObjectsArrayList) ;
+             decryptAPIService.decryptStringServices(keyValueObjectList);
+            return  ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(decryptAPIService.getDecryptedKeyValueObjectsArrayList()) ;
         }catch(Exception e){
             return ResponseEntity.badRequest().body(null);
         }
     }
 
     @PostMapping(path = "decryptStringsToFile")
-    //return ArrayList<KeyValueObject> for now temp
     public ResponseEntity<Resource> decryptStringsToFile(@RequestBody KeyValueObjectList keyValueObjectList){
         //parse out encryptionKey
         DecryptAPIService decryptAPIService = new DecryptAPIService();
         try{
-            ArrayList<KeyValueObject> decryptedKeyValueObjectsArrayList = decryptAPIService.decryptStringServices(keyValueObjectList);
-            decryptAPIService.createFileAddValuesEncrypted(decryptedKeyValueObjectsArrayList);
+            decryptAPIService.decryptStringServices(keyValueObjectList);
+            decryptAPIService.createFileAddValuesEncrypted();
             ByteArrayResource resource = decryptAPIService.createByteArrayResource();
             return ResponseEntity.ok()
                     .headers(decryptAPIService.createHeaderHelperForFileReturnTemp())
