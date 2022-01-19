@@ -8,8 +8,10 @@ import com.oneencrypt.oneencrypt.central.api.EDAPIService;
 import com.oneencrypt.oneencrypt.central.dataobjects.DataStore;
 import com.oneencrypt.oneencrypt.central.dataobjects.DataStoreFactory;
 import com.oneencrypt.oneencrypt.central.dataobjects.KeyValueObject;
+import com.oneencrypt.oneencrypt.central.dataobjects.KeyValueObjectService;
 import com.oneencrypt.oneencrypt.central.inputlogic.APIInput;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class EncryptAPIServices extends EDAPIService {
@@ -32,7 +34,18 @@ public class EncryptAPIServices extends EDAPIService {
         //make sure to include key
         setFile(writeToFileService.returnFile());
     }
-
+    public void createFileAddValuesEncryptedWithByteArray(byte[] byteArrayOfFile){
+        ArrayList<KeyValueObject> keyValueListObj = convertStringToKeyValueObjectList(new String(byteArrayOfFile, StandardCharsets.UTF_8));
+        createFileAddValuesEncrypted(keyValueListObj);
+    }
+    public void convertByteArrayToKeyValueObj(byte[] byteArrayOfFile){
+        String keyValueString = new String(byteArrayOfFile, StandardCharsets.UTF_8);
+        ArrayList<KeyValueObject> keyValueListObj = convertStringToKeyValueObjectList(keyValueString);
+    }
+    private ArrayList<KeyValueObject>  convertStringToKeyValueObjectList(String keyValueString){
+        ArrayList<KeyValueObject> keyValueListObj = KeyValueObjectService.convertStringToKeyValueObject(keyValueString);
+        return keyValueListObj;
+    }
 
     public long getFileLength(){
         return super.getFileLength();

@@ -24,4 +24,5 @@ public class KeyValueObject{
     public String getKey(){return this.key;}
     public String getValue(){return this.value;}
     public String getEncryptionKey(){return this.encryptionKey;}
+
 }
